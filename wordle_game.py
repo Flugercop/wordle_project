@@ -5,3 +5,4 @@ class Wordle:
         s
         
     def penis(self):
+        d bag
