@@ -1,16 +1,19 @@
 "This is a wordle game"
 
-class Player:
-    """Instantiates a player"""
-    
-    def __init__(self, name):
-        
-    def turn(self, guess):
-        """Player guess
-        
-     Raises:
-            ValueError: If user enters a word that does not exist in the list
-    """ 
+
+# Random word gets chosen from wordlist
+# Needs to be a way for the player to guess a word
+# Needs to be a wordlist(file containing strings)
+# needs utf-8 to read and store the strings from the file
+# need to be able match the players guess to the chosen word
+# Need to categorize each of the letters (match function)
+# Keep track of how many guesses a person (max of 6) using a loop
+# Game over for when all guesses have been exhuasted, prints out the word that the person got wrong
+# If they didn't get it wrong, display a victory message showing how many tries it took the player guess the correct word
+# Create a file of scores, and read in from that file and display it to the player
+
+
+
 
 class Wordle:
     """A program that takes in a user inputs to try to guess a 6 letters word
@@ -18,11 +21,38 @@ class Wordle:
     
     Attributes:
         name (str): Name of player
-        wordlist (list of strings): list of strings containing possible words
-    
+        word (str): Random word
     """
         
-    def __init__(self, name, wordlist):    
+    def __init__(self, name, filepath):
+        """ This initilizes a new Wordle object
+        
+        Args:
+            name (str): players name
+            filepath (str): string containing the file path to a wordlist
+            
+        Side effects:
+            Initilizies the name attribute
+            Initilizies the word attribute"""
+        
+    def turn(self):
+        """Player guess
+        
+        Returns:
+            Players guess
+        Raises:
+            ValueError: If user enters a word that does not exist in the list
+        """     
+    
+    def match(self, guess, actual_word):
+        """Matches a users guess to the word the game is thinking of
+    
+            
+        Side effects:
+            Prints out whether or not player has guessed a correct letter in the
+            word
+        """
+        
     
     def play(self):
         """
@@ -32,39 +62,7 @@ class Wordle:
         """
     
             
-class WorldeState:
-    """Provides information on the current state of the wordle game
     
-    Attributes:
-        board(str): a representation of the wordle game
-        max_tries (int): Max amount of attempts
-        bad_guesses(set of characters): set containing characters not in the word
-        good_guesses(set of characetrs): set containing characters that are in
-        the word
-        length(int, 7): Length of word
-        letters_guessed(set of characters): set containing the amount of letters guessed
-    
-    Raises:
-        ValueError: Player already entered a word
-        
-    """
-    def __init__(self, word, guesses):
-        
-        
-    def match(self, word):
-        """There will be a guess function that takes in a user’s guess 
-        and then based on that it outputs a colored answer using “from blessed”.
-        Use for blessed to give letters colors example: if a letter is in the 
-        correct spot, it will be green if it is a correct letter but not in the 
-        right spot it will be yellow, if the letter is not in the solution, 
-        then it will grey out. 
-    
-            
-        Side effects:
-            Prints out whether or not player has guessed a correct letter in the
-            word
-        """
-        
         
 
         
