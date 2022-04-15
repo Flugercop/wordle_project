@@ -7,3 +7,4 @@ class Wordle:
         d bag
         
         "HI"
+        "dog"
