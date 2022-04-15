@@ -2,3 +2,6 @@
 
 class Wordle:
     def bruh(self):
+        s
+        
+    def penis(self):
