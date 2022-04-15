@@ -13,54 +13,54 @@
 # Create a file of scores, and read in from that file and display it to the player
 
 
+if __name__ == "__main__":
 
-
-class Wordle:
-    """A program that takes in a user inputs to try to guess a 6 letters word
-    6 tries
-    
-    Attributes:
-        name (str): Name of player
-        word (str): Random word
-    """
+    class Wordle:
+        """A program that takes in a user inputs to try to guess a 6 letters word
+        6 tries
         
-    def __init__(self, name, filepath):
-        """ This initilizes a new Wordle object
-        
-        Args:
-            name (str): players name
-            filepath (str): string containing the file path to a wordlist
+        Attributes:
+            name (str): Name of player
+            word (str): Random word
+        """
             
-        Side effects:
-            Initilizies the name attribute
-            Initilizies the word attribute"""
-        
-    def turn(self):
-        """Player guess
-        
-        Returns:
-            Players guess
-        Raises:
-            ValueError: If user enters a word that does not exist in the list
-        """     
-    
-    def match(self, guess, actual_word):
-        """Matches a users guess to the word the game is thinking of
-    
+        def __init__(self, name, filepath):
+            """ This initilizes a new Wordle object
             
-        Side effects:
-            Prints out whether or not player has guessed a correct letter in the
-            word
-        """
+            Args:
+                name (str): players name
+                filepath (str): string containing the file path to a wordlist
+                
+            Side effects:
+                Initilizies the name attribute
+                Initilizies the word attribute"""
+            
+        def turn(self):
+            """Player guess
+            
+            Returns:
+                Players guess
+            Raises:
+                ValueError: If user enters a word that does not exist in the list
+            """     
         
-    
-    def play(self):
-        """
+        def match(self, guess, actual_word):
+            """Matches a users guess to the word the game is thinking of
         
-        Side Effects:
-            Prints out current board
-        """
-    
+                
+            Side effects:
+                Prints out whether or not player has guessed a correct letter in the
+                word
+            """
+            
+        
+        def play(self):
+            """
+            
+            Side Effects:
+                Prints out current board
+            """
+        
             
     
         
