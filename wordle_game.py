@@ -36,13 +36,26 @@ if __name__ == "__main__":
                 Initilizies the word attribute"""
             
         def turn(self):
-            """Player guess
+            """Simulates a players attempt at guessing the word the Wordle game
+            is thinking of
             
             Returns:
-                Players guess
+                str: Players guess
+            
             Raises:
                 ValueError: If user enters a word that does not exist in the list
-            """     
+            """ 
+        
+        def gameover(self):
+            """ Displays the results to the players
+            
+            Returns:
+                Bool: True if the game is over, false if it is not
+            
+            Side Effects:
+                - Prints out whether or not the player guessed the word correctly
+                - Will write out the number of tries it took a player to guess the 
+                word correctly to a file and store it"""    
         
         def match(self, guess, actual_word):
             """Matches a users guess to the word the game is thinking of
