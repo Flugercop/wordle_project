@@ -73,6 +73,12 @@ if __name__ == "__main__":
             Side Effects:
                 Prints out current board
             """
+            
+            
+    class WorldePractice(Wordle):
+        
+        def __init__(self, name, filepath):
+            
         
             
     
