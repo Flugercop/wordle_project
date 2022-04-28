@@ -1,6 +1,6 @@
 "This is a wordle game"
 
-
+import random as rand
 # Random word gets chosen from wordlist
 # Needs to be a way for the player to guess a word
 # Needs to be a wordlist(file containing strings)
@@ -12,7 +12,7 @@
 # If they didn't get it wrong, display a victory message showing how many tries it took the player guess the correct word
 # Create a file of scores, and read in from that file and display it to the player
 
-
+#Regex Expression for 6 letter words: \b^[a-z]{6}\b
 if __name__ == "__main__":
 
     class Wordle:
