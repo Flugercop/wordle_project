@@ -17,6 +17,11 @@ import sys
 
 #Regex Expression for 6 letter words: \b^[a-z]{6}\b
 
+TERM = Terminal()
+
+MISPLACED = TERM.yellow3
+GREY = TERM.grey65
+GREEN = TERM.green2
 
 class Wordle:
     """A program that takes in a user inputs to try to guess a 6 letters word
