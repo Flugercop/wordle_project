@@ -19,9 +19,9 @@ import sys
 
 TERM = Terminal()
 
-MISPLACED = TERM.yellow3
-GREY = TERM.grey65
-GREEN = TERM.green2
+MISPLACED = TERM.yellow3 #Yellow to show the letter is correct but misplaced
+INCORRECT = TERM.grey65 #Grey to show the letter is not in the solution
+CORRECT = TERM.green2 #Green to show the letter is in the correct position
 
 class Wordle:
     """A program that takes in a user inputs to try to guess a 6 letters word
