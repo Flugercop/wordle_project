@@ -1,6 +1,7 @@
 "This is a wordle game"
 
 import random as rand
+import pandas as pd
 # Random word gets chosen from wordlist
 # Needs to be a way for the player to guess a word
 # Needs to be a wordlist(file containing strings)
@@ -77,7 +78,7 @@ class Wordle:
         """
         
         Side Effects:
-            Prints out current board
+            Prints out current boards
         """
         
         
