@@ -2,7 +2,9 @@
 
 import random as rand
 import pandas as pd
-# Random word gets chosen from wordlist
+from blessed import Terminal
+import sys
+# Random word gets chosen from wordlists
 # Needs to be a way for the player to guess a word
 # Needs to be a wordlist(file containing strings)
 # needs utf-8 to read and store the strings from the file
