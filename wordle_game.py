@@ -61,6 +61,7 @@ class Wordle:
         """ 
     
     def gameover(self):
+        #Have statistics for the game in this function (Avg guesses, etc)
         """ Displays the results to the players
         
         Returns:
@@ -87,8 +88,12 @@ class Wordle:
         Side Effects:
             Prints out current boards
         """
+    
+    def printboard(self):
+        """
         
-        
+        """
+
             
         
             
