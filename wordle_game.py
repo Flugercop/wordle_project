@@ -40,7 +40,7 @@ class Wordle:
         is thinking of
         
         Returns:
-            str: Players guess
+            str: Players guesss
         
         Raises:
             ValueError: If user enters a word that does not exist in the list
