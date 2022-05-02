@@ -46,7 +46,7 @@ class Wordle:
         is thinking of
         
         Returns:
-            str: Players guess
+            str: Players guesss
         
         Raises:
             ValueError: If user enters a word that does not exist in the list
@@ -81,9 +81,6 @@ class Wordle:
         """
         
         
-class WorldePractice(Wordle):
-    
-    def __init__(self, name, filepath):
             
         
             
