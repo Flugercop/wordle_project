@@ -35,7 +35,11 @@ class Wordle:
         Side effects:
             Initilizies the name attribute
             Initilizies the word attribute"""
-        
+        self.name = name
+        wordList = list()
+        with open(filepath, "r", encoding="utf-8") as f:
+            for line in f:
+                wordList.append(line)
                 
         
     def turn(self):
