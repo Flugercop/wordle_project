@@ -66,8 +66,34 @@ class Wordle:
         if guess in self.wordList: 
             guess = input()
             self.guesses.append(guess)
+            return guess
         else:
-            raise ValueError("This is not a valid word")
+            raise ValueError("This is not a valid word")  
+    
+    def match(self, guess):
+        """Matches a users guess to the word the game is thinking of
+    
+            
+        Side effects:
+            Prints out whether or not player has guessed a correct letter in the
+            word
+        """
+        self.current_guess = list()
+        for x in range(len(guess)):
+            if guess[x] in self.actual_word:
+                print (MISPLACED(guess[x]))
+                if guess[x] == self.actual_word[x]:
+                    print (CORRECT(guess[x]))
+            else:
+                print (INCORRECT(guess[x]))
+        
+    
+    def play(self):
+        """
+        
+        Side Effects:
+            Prints out current boards
+        """
     
     def gameover(self):
         #Have statistics for the game in this function (Avg guesses, etc)
@@ -79,29 +105,13 @@ class Wordle:
         Side Effects:
             - Prints out whether or not the player guessed the word correctly
             - Will write out the number of tries it took a player to guess the 
-            word correctly to a file and store it"""    
-    
-    def match(self, guess, actual_word):
-        """Matches a users guess to the word the game is thinking of
-    
-            
-        Side effects:
-            Prints out whether or not player has guessed a correct letter in the
-            word
-        """
-        
-    
-    def play(self):
-        """
-        
-        Side Effects:
-            Prints out current boards
-        """
+            word correctly to a file and store it"""  
     
     def printboard(self):
         """
         
         """
+        print(self.current_guess)
 
             
         
