@@ -1,8 +1,9 @@
 "This is a wordle game"
 
-import random as rand
+import random as choice
 import pandas as pd
 from blessed import Terminal
+import re
 import sys
 # Random word gets chosen from wordlists
 # Needs to be a way for the player to guess a word
@@ -44,21 +45,29 @@ class Wordle:
             Initilizies the word attribute"""
             
         self.name = name
-        wordList = list()
+        self.guesses = list()
+        self.wordList = list()
+        expr = r"\b^[a-z]{6}\b"
         with open(filepath, "r", encoding="utf-8") as f:
-            for line in f:
-                wordList.append(line)
+            wordList = [line.strip() for line in f if re.search(expr, line)]
+        self.actual_word = choice(wordList) 
         
     def turn(self):
         """Simulates a players attempt at guessing the word the Wordle game
         is thinking of
         
         Returns:
-            str: Players guesss
+            str: Players guess
         
         Raises:
             ValueError: If user enters a word that does not exist in the list
         """ 
+        print("Guess a Letter")
+        if guess in self.wordList: 
+            guess = input()
+            self.guesses.append(guess)
+        else:
+            raise ValueError("This is not a valid word")
     
     def gameover(self):
         #Have statistics for the game in this function (Avg guesses, etc)
