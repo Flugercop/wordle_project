@@ -86,6 +86,15 @@ class Wordle:
                     print (CORRECT(guess[x]))
             else:
                 print (INCORRECT(guess[x]))
+                
+           
+#for x in range(len(guess)):
+    #if guess[x] == other_guess[x]:
+        #print (CORRECT(guess[x]), end=" ")
+    #elif guess[x] in other_guess:
+        #print (MISPLACED(guess[x]), end=" ")
+    #else:
+        #print (INCORRECT(guess[x]), end=" ")
         
     
     def play(self):
