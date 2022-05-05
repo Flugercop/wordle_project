@@ -51,7 +51,7 @@ class Wordle:
         with open(filepath, "r", encoding="utf-8") as f:
             wordList = [line.strip() for line in f if re.search(expr, line)]
         self.actual_word = choice(wordList) 
-        
+        #self.countguess = (0)
     def turn(self):
         """Simulates a players attempt at guessing the word the Wordle game
         is thinking of
@@ -69,7 +69,7 @@ class Wordle:
             return guess
         else:
             raise ValueError("This is not a valid word")  
-    
+        #need to increment countguess variable 
     def match(self, guess):
         """Matches a users guess to the word the game is thinking of
     
@@ -96,9 +96,29 @@ class Wordle:
         """
         for x in range (0,6):
             self.match()
-            
+        #the next two lines get the users first guess and match it
+        turn = self.turn()
+        self.match(turn)
+        #check to see if the game is over
+        while self.gameover(turn) == False:
+        #if the game is not over get the user next guess and match it
+            turn = self.turn()
+            self.match(turn)
     
-    def gameover(self):
+    def gameover(self, currentguess):
+        
+    # checks if the users guess it not equal to the actual word
+        if self.actual_word != currentguess:
+    # checking if the user reached the max guess count
+            if self.countguess == 6:
+                return True
+            else: 
+    # this means the user guessed the wrong word but still has turns remaining
+                return False
+        else: 
+    #this means the user guessed the right word
+            return True            
+        
         #Have statistics for the game in this function (Avg guesses, etc)
         """ Displays the results to the players
         
