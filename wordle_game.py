@@ -1,8 +1,9 @@
 "This is a wordle game"
 
-import random as rand
+import random as choice
 import pandas as pd
 from blessed import Terminal
+import re
 import sys
 # Random word gets chosen from wordlists
 # Needs to be a way for the player to guess a word
@@ -44,21 +45,58 @@ class Wordle:
             Initilizies the word attribute"""
             
         self.name = name
-        wordList = list()
+        self.guesses = list()
+        self.wordList = list()
+        expr = r"\b^[a-z]{6}\b"
         with open(filepath, "r", encoding="utf-8") as f:
-            for line in f:
-                wordList.append(line)
+            wordList = [line.strip() for line in f if re.search(expr, line)]
+        self.actual_word = choice(wordList) 
         
     def turn(self):
         """Simulates a players attempt at guessing the word the Wordle game
         is thinking of
         
         Returns:
-            str: Players guesss
+            str: Players guess
         
         Raises:
             ValueError: If user enters a word that does not exist in the list
         """ 
+        print("Guess a Letter")
+        if guess in self.wordList: 
+            guess = input()
+            self.guesses.append(guess)
+            return guess
+        else:
+            raise ValueError("This is not a valid word")  
+    
+    def match(self, guess):
+        """Matches a users guess to the word the game is thinking of
+    
+            
+        Side effects:
+            Prints out whether or not player has guessed a correct letter in the
+            word
+        """  
+        guess = self.turn()     
+        for x in range(len(self.turn())):
+            if guess[x] == self.actual_word[x]:
+                print (CORRECT(guess[x]), end=" ")
+            elif guess[x] in self.actual_word:
+                print (MISPLACED(guess[x]), end=" ")
+            else:
+                print (INCORRECT(guess[x]), end=" ")
+        
+    
+    def play(self):
+        """
+        
+        Side Effects:
+            Prints out current boards
+        """
+        for x in range (0,6):
+            self.match()
+            
     
     def gameover(self):
         # Have statistics for the game in this function (Avg guesses, etc)
@@ -70,34 +108,15 @@ class Wordle:
         Side Effects:
             - Prints out whether or not the player guessed the word correctly
             - Will write out the number of tries it took a player to guess the 
-            word correctly to a file and store it"""    
-    
-    def match(self, guess, actual_word):
-        """Matches a users guess to the word the game is thinking of
-    
-            
-        Side effects:
-            Prints out whether or not player has guessed a correct letter in the
-            word
-        """
-        
-    
-    def play(self):
-        """
-        
-        Side Effects:
-            Prints out current boards
-        """
+            word correctly to a file and store it"""  
     
     def printboard(self):
         """
         
         """
+        print(self.current_guess)
 
             
         
             
-if __name__ == "__main__":   
-        
-
-        
+if __name__ == "__main__": 
