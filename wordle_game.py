@@ -77,24 +77,15 @@ class Wordle:
         Side effects:
             Prints out whether or not player has guessed a correct letter in the
             word
-        """
-        self.current_guess = list()
-        for x in range(len(guess)):
-            if guess[x] in self.actual_word:
-                print (MISPLACED(guess[x]))
-                if guess[x] == self.actual_word[x]:
-                    print (CORRECT(guess[x]))
+        """  
+        guess = self.turn()     
+        for x in range(len(self.turn())):
+            if guess[x] == self.actual_word[x]:
+                print (CORRECT(guess[x]), end=" ")
+            elif guess[x] in self.actual_word:
+                print (MISPLACED(guess[x]), end=" ")
             else:
-                print (INCORRECT(guess[x]))
-                
-           
-#for x in range(len(guess)):
-    #if guess[x] == other_guess[x]:
-        #print (CORRECT(guess[x]), end=" ")
-    #elif guess[x] in other_guess:
-        #print (MISPLACED(guess[x]), end=" ")
-    #else:
-        #print (INCORRECT(guess[x]), end=" ")
+                print (INCORRECT(guess[x]), end=" ")
         
     
     def play(self):
@@ -103,6 +94,9 @@ class Wordle:
         Side Effects:
             Prints out current boards
         """
+        for x in range (0,6):
+            self.match()
+            
     
     def gameover(self):
         #Have statistics for the game in this function (Avg guesses, etc)
