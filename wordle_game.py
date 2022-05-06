@@ -6,6 +6,7 @@ from blessed import Terminal
 import re
 import sys
 import os
+# Doesn't check for one instance
 # Random word gets chosen from wordlists
 # Needs to be a way for the player to guess a word
 # Needs to be a wordlist(file containing strings)
@@ -95,18 +96,23 @@ class Wordle:
         Side Effects:
             Prints out current boards
         """
-        for x in range (0,6):
-            while True:
-                try:
-                    self.match(self.turn())
-                    self.printboard()
-                except ValueError:
-                    print("Not a valid word")
-                else:
+        with TERM.fullscreen():
+            for x in range (0,6):
+                while True:
+                    try:
+                        self.match(self.turn())
+                        self.printboard()
+                    except ValueError:
+                        print("Not a valid word")
+                    else:
+                        break
+                if self.gameover():
+                    self.win_lose("score.txt")
+                    if not self.replay():
+                        sys.exit(0)
+                    else:
+                        print ("Thanks for Playing")
                     break
-            if self.gameover():
-                self.win_lose("score.txt")
-                break
         #the next two lines get the users first guess and match it        
         #check to see if the game is over
         
@@ -142,23 +148,43 @@ class Wordle:
         print(TERM.clear)
         for guess in self.guesses:
             self.match(guess)
+        print(TERM.black_on_white(TERM.center('A,B,C,D,E,F,G,H,I,J,K')))
+        print(TERM.black_on_white(TERM.center('L,M,N,O,P,Q,R,S,T,U,V')))
+        print(TERM.black_on_white(TERM.center('W,X,Y,Z')))
+        
     
     def win_lose(self, filepath):
         if self.actual_word == self.guesses[-1]:
-            print("You win")
-            print (f"You won on the {len(self.guesses)} try")
+            print(TERM.home + TERM.move_y(TERM.height // 2))
+            print(TERM.black_on_darkkhaki(TERM.center('You WIN!')))
+            score = ("1st" if len(self.guesses) == 1 else
+                     "2nd" if len(self.guesses) == 2 else
+                     "3rd" if len(self.guesses) == 3 else
+                     "4th" if len(self.guesses) == 4 else
+                     "5th" if len(self.guesses) == 5 else
+                     "6th")
+            print (f"You won on the {score} try")
             with open(filepath, "a+", encoding="utf-8") as f:
                 f.seek(0)
                 lines = [line.strip() for line in f.readlines()]
                 f.write("Attempt " + str(len(lines) + 1) +": " + str(len(self.guesses)) + "/6" + "\n")       
         else:
             print("You lose")
+            
+    def replay(self):
+        print()
+        while True:
+            response = (input("Play Again: (y/n)? "))
+            if response not in "yn":
+                print("Please type 'y' or 'n'.")
+                continue
+            return response == "y"
 
 def main():
     player = Wordle("Jonnie","wordlist.txt")
     print(player.actual_word)
     player.play()
-    print(player.guesses)
+
   
 
             
