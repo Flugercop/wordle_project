@@ -5,6 +5,7 @@ import pandas as pd
 from blessed import Terminal
 import re
 import sys
+import os
 # Random word gets chosen from wordlists
 # Needs to be a way for the player to guess a word
 # Needs to be a wordlist(file containing strings)
@@ -104,7 +105,7 @@ class Wordle:
                 else:
                     break
             if self.gameover():
-                self.win_lose()
+                self.win_lose("score.txt")
                 break
         #the next two lines get the users first guess and match it        
         #check to see if the game is over
@@ -123,7 +124,7 @@ class Wordle:
     # checks if the users guess it not equal to the actual word
         if self.actual_word != self.guesses[-1]:
     # checking if the user reached the max guess count
-            if len(self.guesses) > 6:
+            if len(self.guesses) >= 6:
                 return True
             else: 
     # this means the user guessed the wrong word but still has turns remaining
@@ -141,10 +142,15 @@ class Wordle:
         print(TERM.clear)
         for guess in self.guesses:
             self.match(guess)
-        
-    def win_lose(self):
+    
+    def win_lose(self, filepath):
         if self.actual_word == self.guesses[-1]:
             print("You win")
+            print (f"You won on the {len(self.guesses)} try")
+            with open(filepath, "a+", encoding="utf-8") as f:
+                f.seek(0)
+                lines = [line.strip() for line in f.readlines()]
+                f.write("Attempt " + str(len(lines) + 1) +": " + str(len(self.guesses)) + "/6" + "\n")       
         else:
             print("You lose")
 
@@ -152,6 +158,7 @@ def main():
     player = Wordle("Jonnie","wordlist.txt")
     print(player.actual_word)
     player.play()
+    print(player.guesses)
   
 
             
