@@ -1,6 +1,6 @@
 "This is a wordle game"
 
-import random as choice
+from random import choice
 import pandas as pd
 from blessed import Terminal
 import re
@@ -46,12 +46,11 @@ class Wordle:
             
         self.name = name
         self.guesses = list()
-        self.wordList = list()
         expr = r"\b^[a-z]{6}\b"
         with open(filepath, "r", encoding="utf-8") as f:
-            wordList = [line.strip() for line in f if re.search(expr, line)]
-        self.actual_word = choice(wordList) 
-        #self.countguess = (0)
+            self.wordList = [line.strip().upper() for line in f if re.search(expr, line)]
+        self.actual_word = choice(self.wordList) 
+    
     def turn(self):
         """Simulates a players attempt at guessing the word the Wordle game
         is thinking of
@@ -62,14 +61,15 @@ class Wordle:
         Raises:
             ValueError: If user enters a word that does not exist in the list
         """ 
-        print("Guess a Letter")
+        print("Guess a Word")
+        guess = input()
         if guess in self.wordList: 
-            guess = input()
             self.guesses.append(guess)
             return guess
         else:
             raise ValueError("This is not a valid word")  
-        #need to increment countguess variable 
+
+    
     def match(self, guess):
         """Matches a users guess to the word the game is thinking of
     
@@ -77,15 +77,15 @@ class Wordle:
         Side effects:
             Prints out whether or not player has guessed a correct letter in the
             word
-        """  
-        guess = self.turn()     
-        for x in range(len(self.turn())):
+        """      
+        for x in range(len(guess)):
             if guess[x] == self.actual_word[x]:
                 print (CORRECT(guess[x]), end=" ")
             elif guess[x] in self.actual_word:
                 print (MISPLACED(guess[x]), end=" ")
             else:
                 print (INCORRECT(guess[x]), end=" ")
+        print()
         
     
     def play(self):
@@ -95,31 +95,22 @@ class Wordle:
             Prints out current boards
         """
         for x in range (0,6):
-            self.match()
-        #the next two lines get the users first guess and match it
-        turn = self.turn()
-        self.match(turn)
+            while True:
+                try:
+                    self.match(self.turn())
+                    self.printboard()
+                except ValueError:
+                    print("Not a valid word")
+                else:
+                    break
+            if self.gameover():
+                self.win_lose()
+                break
+        #the next two lines get the users first guess and match it        
         #check to see if the game is over
-        while self.gameover(turn) == False:
-        #if the game is not over get the user next guess and match it
-            turn = self.turn()
-            self.match(turn)
+        
     
-    def gameover(self, currentguess):
-        
-    # checks if the users guess it not equal to the actual word
-        if self.actual_word != currentguess:
-    # checking if the user reached the max guess count
-            if self.countguess == 6:
-                return True
-            else: 
-    # this means the user guessed the wrong word but still has turns remaining
-                return False
-        else: 
-    #this means the user guessed the right word
-            return True            
-        
-        #Have statistics for the game in this function (Avg guesses, etc)
+    def gameover(self):
         """ Displays the results to the players
         
         Returns:
@@ -129,14 +120,42 @@ class Wordle:
             - Prints out whether or not the player guessed the word correctly
             - Will write out the number of tries it took a player to guess the 
             word correctly to a file and store it"""  
-    
+    # checks if the users guess it not equal to the actual word
+        if self.actual_word != self.guesses[-1]:
+    # checking if the user reached the max guess count
+            if len(self.guesses) > 6:
+                return True
+            else: 
+    # this means the user guessed the wrong word but still has turns remaining
+                return False
+        else: 
+    #this means the user guessed the right word
+            return True            
+        
+        #Have statistics for the game in this function (Avg guesses, etc)
+        
     def printboard(self):
         """
         
         """
-        print(self.current_guess)
+        print(TERM.clear)
+        for guess in self.guesses:
+            self.match(guess)
+        
+    def win_lose(self):
+        if self.actual_word == self.guesses[-1]:
+            print("You win")
+        else:
+            print("You lose")
+
+def main():
+    player = Wordle("Jonnie","wordlist.txt")
+    print(player.actual_word)
+    player.play()
+  
 
             
         
             
 if __name__ == "__main__": 
+    main()
