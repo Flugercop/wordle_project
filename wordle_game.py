@@ -86,6 +86,7 @@ class Wordle:
                 print (CORRECT(guess[x]), end=" ")
             elif guess[x] in self.actual_word:
                 print (MISPLACED(guess[x]), end=" ")
+                
             else:
                 print (INCORRECT(guess[x]), end=" ")
         print()
