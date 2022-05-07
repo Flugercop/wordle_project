@@ -51,7 +51,7 @@ class Wordle:
         expr = r"\b^[a-z]{6}\b"
         with open(filepath, "r", encoding="utf-8") as f:
             self.wordList = [line.strip().upper() for line in f if re.search(expr, line)]
-        self.actual_word = choice(self.wordList) 
+        self.actual_word = "CHEEKS" 
     
     def turn(self):
         """Simulates a players attempt at guessing the word the Wordle game
@@ -63,7 +63,6 @@ class Wordle:
         Raises:
             ValueError: If user enters a word that does not exist in the list
         """ 
-        print("Guess a Word")
         guess = input()
         if guess in self.wordList: 
             self.guesses.append(guess)
@@ -81,6 +80,8 @@ class Wordle:
             word
         """      
         for x in range(len(guess)):
+            #count = len(re.findall(guess[x], self.actual_word))
+            #count2 = len(re.findall(guess[x], guess))
             if guess[x] == self.actual_word[x]:
                 print (CORRECT(guess[x]), end=" ")
             elif guess[x] in self.actual_word:
@@ -97,6 +98,7 @@ class Wordle:
             Prints out current boards
         """
         with TERM.fullscreen():
+            self.printboard()
             for x in range (0,6):
                 while True:
                     try:
@@ -169,7 +171,7 @@ class Wordle:
                 lines = [line.strip() for line in f.readlines()]
                 f.write("Attempt " + str(len(lines) + 1) +": " + str(len(self.guesses)) + "/6" + "\n")       
         else:
-            print("You lose")
+            print(TERM.black_on_darkkhaki(TERM.center('You Lose! The Correct Word Was: ' + self.actual_word)))
             
     def replay(self):
         print()
