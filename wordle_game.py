@@ -51,7 +51,7 @@ class Wordle:
         expr = r"\b^[a-z]{6}\b"
         with open(filepath, "r", encoding="utf-8") as f:
             self.wordList = [line.strip().upper() for line in f if re.search(expr, line)]
-        self.actual_word = "CHEEKS" 
+        self.actual_word = "LADDER" 
     
     def turn(self):
         """Simulates a players attempt at guessing the word the Wordle game
@@ -79,63 +79,46 @@ class Wordle:
             Prints out whether or not player has guessed a correct letter in the
             word
         """      
+        freq = {i : [self.actual_word.count(i), {pos for pos, char in enumerate(self.actual_word) if char == i}] for i in set(self.actual_word)}
+        guess_freq = {i : [guess.count(i), {pos for pos, char in enumerate(guess) if char == i}] for i in set(guess)}
         for x in range(len(guess)):
-            #count = len(re.findall(guess[x], self.actual_word))
-            #count2 = len(re.findall(guess[x], guess))
-            if guess[x] == self.actual_word[x]:
-                print (CORRECT(guess[x]), end=" ")
-            elif guess[x] in self.actual_word:
-                print (MISPLACED(guess[x]), end=" ")
-                
-            else:
+            char = guess[x]
+            # guessed character not found in targeted word
+            if char not in freq.keys():
                 print (INCORRECT(guess[x]), end=" ")
-        print()
-        
-        
-        print(len(guess))
-
-# freq = {i : [other_guess.count(i), {pos for pos, char in enumerate(other_guess) if char == i}] for i in set(other_guess)}
-
-# print(freq)
-# guess_freq = {i : [guess.count(i), {pos for pos, char in enumerate(guess) if char == i}] for i in set(guess)}
-# print(guess_freq)
-# for x in range(len(guess)):
-#     char = guess[x]
-#     # guessed character not found in targeted word
-#     if char not in freq.keys():
-#          print (INCORRECT(guess[x]), end=" ")
-#      # if the guess correctly guess all index of the targeted word
-#     elif len(set(freq[char][1].intersection(guess_freq[char][1]))) == freq[char][0]:
-#         # if this index is one of the correct index then print green
-#         if x in freq[char][1]:
-#             print (CORRECT(guess[x]), end=" ")
-#         # else not one of the correct index, print grey
-#         else:
-#             print (INCORRECT(guess[x]), end=" ")
-#     # if there are more instances in targeted word than guess   
-#     elif freq[char][0] > guess_freq[char][0]:
-#         if x in freq[char][1]:
-#             print (CORRECT(guess[x]), end=" ")
-#         # else not one of the correct index, print grey
-#         else:
-#             print (MISPLACED(guess[x]), end=" ")
-        
-#     # if there are more instances in guess than targeted word
-#     elif guess_freq[char][0] > freq[char][0]:
-#         if x in freq[char][1]:
-#             print (CORRECT(guess[x]), end=" ")
-#             freq[char][0] -= 1
-#         # else not one of the correct index, print grey
-#         elif freq[char][0] > 0:
-#             print (MISPLACED(guess[x]), end=" ")
-#             freq[char][0] -= 1
-#         # extra instances
-#         else:
-#             print (INCORRECT(guess[x]), end=" ")
-#     elif char == other_guess[x]:
-#         print (CORRECT(guess[x]), end=" ")
-#     else:
-#         print (MISPLACED(guess[x]), end=" ")       
+            # if the guess correctly guess all index of the targeted word
+            elif len(set(freq[char][1].intersection(guess_freq[char][1]))) == freq[char][0]:
+                # if this index is one of the correct index then print green
+                if x in freq[char][1]:
+                    print (CORRECT(guess[x]), end=" ")
+                # else not one of the correct index, print grey
+                else:
+                    print (INCORRECT(guess[x]), end=" ")
+            # if there are more instances in targeted word than guess   
+            elif freq[char][0] > guess_freq[char][0]:
+                if x in freq[char][1]:
+                    print (CORRECT(guess[x]), end=" ")
+                # else not one of the correct index, print grey
+                else:
+                    print (MISPLACED(guess[x]), end=" ")
+                
+            # if there are more instances in guess than targeted word
+            elif guess_freq[char][0] > freq[char][0]:
+                if x in freq[char][1]:
+                    print (CORRECT(guess[x]), end=" ")
+                    freq[char][0] -= 1
+                # else not one of the correct index, print grey
+                elif freq[char][0] > 0:
+                    print (MISPLACED(guess[x]), end=" ")
+                    freq[char][0] -= 1
+                # extra instances
+                else:
+                    print (INCORRECT(guess[x]), end=" ")
+            elif char == self.actual_word[x]:
+                print (CORRECT(guess[x]), end=" ")
+            else:
+                print (MISPLACED(guess[x]), end=" ") 
+        print()      
 
         
     
@@ -198,9 +181,10 @@ class Wordle:
         print(TERM.clear)
         for guess in self.guesses:
             self.match(guess)
-        print(TERM.black_on_white(TERM.center('A,B,C,D,E,F,G,H,I,J,K')))
-        print(TERM.black_on_white(TERM.center('L,M,N,O,P,Q,R,S,T,U,V')))
-        print(TERM.black_on_white(TERM.center('W,X,Y,Z')))
+        print()
+        print(TERM.white(TERM.center('A,B,C,D,E,F,G,H,I,J,K')))
+        print(TERM.white(TERM.center('L,M,N,O,P,Q,R,S,T,U,V')))
+        print(TERM.white(TERM.center('W,X,Y,Z')))
         
     
     def win_lose(self, filepath):
