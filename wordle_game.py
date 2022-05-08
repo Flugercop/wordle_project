@@ -25,6 +25,7 @@ TERM = Terminal()
 MISPLACED = TERM.yellow3 #Yellow to show the letter is correct but misplaced
 INCORRECT = TERM.grey65 #Grey to show the letter is not in the solution
 CORRECT = TERM.green2 #Green to show the letter is in the correct position
+VIOLET = TERM.violetred4
 
 class Wordle:
     """A program that takes in a user inputs to try to guess a 6 letters word
@@ -51,7 +52,7 @@ class Wordle:
         expr = r"\b^[a-z]{6}\b"
         with open(filepath, "r", encoding="utf-8") as f:
             self.wordList = [line.strip().upper() for line in f if re.search(expr, line)]
-        self.actual_word = "LADDER" 
+        self.actual_word = choice(self.wordList)
     
     def turn(self):
         """Simulates a players attempt at guessing the word the Wordle game
@@ -179,6 +180,8 @@ class Wordle:
         
         """
         print(TERM.clear)
+        print(VIOLET(f"{self.name}"))
+        print(self.actual_word)
         for guess in self.guesses:
             self.match(guess)
         print()
@@ -210,13 +213,12 @@ class Wordle:
         while True:
             response = (input("Play Again: (y/n)? "))
             if response not in "yn":
-                print("Please type 'y' or 'n'.")
+                print("Invalid. Type 'y' or 'n'.")
                 continue
             return response == "y"
 
 def main():
-    player = Wordle("Jonnie","wordlist.txt")
-    print(player.actual_word)
+    player = Wordle("Chigozie","wordlist.txt")
     player.play()
 
   
