@@ -199,7 +199,8 @@ class Wordle:
                 lines = [line.strip() for line in f.readlines()]
                 f.write("Attempt " + str(len(lines) + 1) +": " + str(len(self.guesses)) + "/6" + "\n")       
         else:
-            print(TERM.black_on_darkkhaki(TERM.center('You Lose! The Correct Word Was: ' + self.actual_word)))
+            print(TERM.black_on_darkkhaki(TERM.center("You Lose!")))
+            print (TERM.black_on_white(TERM.center("The Correct Word Was: " + (TERM.red(self.actual_word)))))
             
     def replay(self):
         """ Asks user if they want to play again
