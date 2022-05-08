@@ -1,31 +1,14 @@
-"This is a wordle game"
-
 from random import choice
-import pandas as pd
 from blessed import Terminal
 import re
 import sys
-import os
-# Doesn't check for one instance
-# Random word gets chosen from wordlists
-# Needs to be a way for the player to guess a word
-# Needs to be a wordlist(file containing strings)
-# needs utf-8 to read and store the strings from the file
-# need to be able match the players guess to the chosen word
-# Need to categorize each of the letters (match function)
-# Keep track of how many guesses a person (max of 6) using a loop
-# Game over for when all guesses have been exhuasted, prints out the word that the person got wrong
-# If they didn't get it wrong, display a victory message showing how many tries it took the player guess the correct word
-# Create a file of scores, and read in from that file and display it to the player
-
-#Regex Expression for 6 letter words: \b^[a-z]{6}\b
 
 TERM = Terminal()
 
 MISPLACED = TERM.yellow3 #Yellow to show the letter is correct but misplaced
 INCORRECT = TERM.grey65 #Grey to show the letter is not in the solution
 CORRECT = TERM.green2 #Green to show the letter is in the correct position
-VIOLET = TERM.violetred4
+VIOLET = TERM.violetred4 #Violet color for player name
 
 class Wordle:
     """A program that takes in a user inputs to try to guess a 6 letters word
@@ -33,7 +16,9 @@ class Wordle:
     
     Attributes:
         name (str): Name of player
-        word (str): Random word
+        guesses (list of str): lists holding the player's guesses
+        actual_word (str): word that is trying to be guessed
+        wordList (list of str): List of words with 6 letters
     """
         
     def __init__(self, name, filepath):
@@ -45,7 +30,9 @@ class Wordle:
             
         Side effects:
             Initilizies the name attribute
-            Initilizies the word attribute"""
+            Inititalizes the guesses attribute 
+            Initilizies the actual_word attribute
+            Initializes the wordList attribute"""
             
         self.name = name
         self.guesses = list()
@@ -63,6 +50,9 @@ class Wordle:
         
         Raises:
             ValueError: If user enters a word that does not exist in the list
+            
+        Side effects:
+            Appends a user's guess to the self.guesses list
         """ 
         guess = input()
         if guess in self.wordList: 
@@ -75,10 +65,12 @@ class Wordle:
     def match(self, guess):
         """Matches a users guess to the word the game is thinking of
     
+        Args:
+            guess (str): A user's guess
             
         Side effects:
-            Prints out whether or not player has guessed a correct letter in the
-            word
+            Prints information to the terminal
+            
         """      
         freq = {i : [self.actual_word.count(i), {pos for pos, char in enumerate(self.actual_word) if char == i}] for i in set(self.actual_word)}
         guess_freq = {i : [guess.count(i), {pos for pos, char in enumerate(guess) if char == i}] for i in set(guess)}
@@ -124,10 +116,11 @@ class Wordle:
         
     
     def play(self):
-        """
+        """ Simulates a full Wordle Game
         
         Side Effects:
-            Prints out current boards
+            Prints information to the terminal
+            
         """
         with TERM.fullscreen():
             self.printboard()
@@ -137,46 +130,37 @@ class Wordle:
                         self.match(self.turn())
                         self.printboard()
                     except ValueError:
-                        print("Not a valid word")
+                        print(TERM.red("Not a valid word"))
                     else:
                         break
                 if self.gameover():
                     self.win_lose("score.txt")
                     if not self.replay():
                         sys.exit(0)
-                    else:
-                        print ("Thanks for Playing")
-                    break
         #the next two lines get the users first guess and match it        
         #check to see if the game is over
         
     
     def gameover(self):
-        """ Displays the results to the players
+        """ Determines whether or not the game is over
         
         Returns:
             Bool: True if the game is over, false if it is not
         
-        Side Effects:
-            - Prints out whether or not the player guessed the word correctly
-            - Will write out the number of tries it took a player to guess the 
-            word correctly to a file and store it"""  
-    # checks if the users guess it not equal to the actual word
+        """  
         if self.actual_word != self.guesses[-1]:
-    # checking if the user reached the max guess count
             if len(self.guesses) >= 6:
                 return True
             else: 
-    # this means the user guessed the wrong word but still has turns remaining
                 return False
         else: 
-    #this means the user guessed the right word
             return True            
         
-        #Have statistics for the game in this function (Avg guesses, etc)
-        
     def printboard(self):
-        """
+        """ Displays the current contents of the board
+        
+        Side effects:
+            Prints information to the terminal
         
         """
         print(TERM.clear)
@@ -191,6 +175,15 @@ class Wordle:
         
     
     def win_lose(self, filepath):
+        """Determines what happens if the player wins or loses
+
+        Args:
+            filepath (str): String containing file path to scores
+            
+        Side effects:
+            Adds a players score to score.txt
+            Prints information to the terminal
+        """
         if self.actual_word == self.guesses[-1]:
             print(TERM.home + TERM.move_y(TERM.height // 2))
             print(TERM.black_on_darkkhaki(TERM.center('You WIN!')))
@@ -200,7 +193,7 @@ class Wordle:
                      "4th" if len(self.guesses) == 4 else
                      "5th" if len(self.guesses) == 5 else
                      "6th")
-            print (f"You won on the {score} try")
+            print (TERM.black_on_white(TERM.center(f"You won on the {score} try")))
             with open(filepath, "a+", encoding="utf-8") as f:
                 f.seek(0)
                 lines = [line.strip() for line in f.readlines()]
@@ -209,6 +202,14 @@ class Wordle:
             print(TERM.black_on_darkkhaki(TERM.center('You Lose! The Correct Word Was: ' + self.actual_word)))
             
     def replay(self):
+        """ Asks user if they want to play again
+        
+        Returns:
+            Bool: True if the user wants to keep playing, false if otherwise 
+            
+        Side effects:
+            Prints information to the terminal
+        """
         print()
         while True:
             response = (input("Play Again: (y/n)? "))
@@ -223,8 +224,6 @@ def main():
 
   
 
-            
-        
-            
+                       
 if __name__ == "__main__": 
     main()
