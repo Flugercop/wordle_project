@@ -91,6 +91,53 @@ class Wordle:
                 print (INCORRECT(guess[x]), end=" ")
         print()
         
+        
+        print(len(guess))
+
+# freq = {i : [other_guess.count(i), {pos for pos, char in enumerate(other_guess) if char == i}] for i in set(other_guess)}
+
+# print(freq)
+# guess_freq = {i : [guess.count(i), {pos for pos, char in enumerate(guess) if char == i}] for i in set(guess)}
+# print(guess_freq)
+# for x in range(len(guess)):
+#     char = guess[x]
+#     # guessed character not found in targeted word
+#     if char not in freq.keys():
+#          print (INCORRECT(guess[x]), end=" ")
+#      # if the guess correctly guess all index of the targeted word
+#     elif len(set(freq[char][1].intersection(guess_freq[char][1]))) == freq[char][0]:
+#         # if this index is one of the correct index then print green
+#         if x in freq[char][1]:
+#             print (CORRECT(guess[x]), end=" ")
+#         # else not one of the correct index, print grey
+#         else:
+#             print (INCORRECT(guess[x]), end=" ")
+#     # if there are more instances in targeted word than guess   
+#     elif freq[char][0] > guess_freq[char][0]:
+#         if x in freq[char][1]:
+#             print (CORRECT(guess[x]), end=" ")
+#         # else not one of the correct index, print grey
+#         else:
+#             print (MISPLACED(guess[x]), end=" ")
+        
+#     # if there are more instances in guess than targeted word
+#     elif guess_freq[char][0] > freq[char][0]:
+#         if x in freq[char][1]:
+#             print (CORRECT(guess[x]), end=" ")
+#             freq[char][0] -= 1
+#         # else not one of the correct index, print grey
+#         elif freq[char][0] > 0:
+#             print (MISPLACED(guess[x]), end=" ")
+#             freq[char][0] -= 1
+#         # extra instances
+#         else:
+#             print (INCORRECT(guess[x]), end=" ")
+#     elif char == other_guess[x]:
+#         print (CORRECT(guess[x]), end=" ")
+#     else:
+#         print (MISPLACED(guess[x]), end=" ")       
+
+        
     
     def play(self):
         """
