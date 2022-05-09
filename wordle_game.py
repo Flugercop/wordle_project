@@ -195,7 +195,7 @@ class Wordle:
             with open(filepath, "a+", encoding="utf-8") as f:
                 f.seek(0)
                 lines = [line.strip() for line in f.readlines()]
-                f.write("Attempt " + str(len(lines) + 1) +": " + str(len(self.guesses)) + "/6" + "\n")       
+                f.write("Attempt " + str(len(lines) + 1) +": " + self.actual_word + "(" + str(len(self.guesses)) + "/6)" + "\n")       
         else:
             with open(filepath, "a+", encoding="utf-8") as f:
                 f.seek(0)
