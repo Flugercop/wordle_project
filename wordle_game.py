@@ -137,9 +137,7 @@ class Wordle:
                     self.win_lose("score.txt")
                     if not self.replay():
                         sys.exit(0)
-        #the next two lines get the users first guess and match it        
-        #check to see if the game is over
-        
+
     
     def gameover(self):
         """ Determines whether or not the game is over
@@ -199,6 +197,10 @@ class Wordle:
                 lines = [line.strip() for line in f.readlines()]
                 f.write("Attempt " + str(len(lines) + 1) +": " + str(len(self.guesses)) + "/6" + "\n")       
         else:
+            with open(filepath, "a+", encoding="utf-8") as f:
+                f.seek(0)
+                lines = [line.strip() for line in f.readlines()]
+                f.write("Attempt " + str(len(lines) + 1) +": " + "GAMEOVER" + "\n")
             print(TERM.black_on_darkkhaki(TERM.center("You Lose!")))
             print (TERM.black_on_white(TERM.center("The Correct Word Was: " + (TERM.red(self.actual_word)))))
             
