@@ -211,7 +211,7 @@ class Wordle:
             Bool: True if the user wants to keep playing, false if otherwise 
             
         Side effects:
-            Prints information to the terminal
+            prints information to the terminal
         """
         print()
         while True:
