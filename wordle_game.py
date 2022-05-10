@@ -162,8 +162,8 @@ class Wordle:
         
         """
         print(TERM.clear)
-        print(VIOLET(f"{self.name}"))
         print(self.actual_word)
+        print(VIOLET(f"{self.name}"))
         for guess in self.guesses:
             self.match(guess)
         print()
