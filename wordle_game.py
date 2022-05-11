@@ -39,7 +39,7 @@ class Wordle:
         expr = r"\b^[a-z]{6}\b"
         with open(filepath, "r", encoding="utf-8") as f:
             self.wordList = [line.strip().upper() for line in f if re.search(expr, line)]
-        self.actual_word = choice(self.wordList)
+        
     
     def turn(self):
         """Simulates a players attempt at guessing the word the Wordle game
@@ -123,6 +123,7 @@ class Wordle:
             
         """
         with TERM.fullscreen():
+            self.actual_word = choice(self.wordList)
             self.printboard()
             for x in range (0,6):
                 while True:
@@ -137,6 +138,8 @@ class Wordle:
                     self.win_lose("score.txt")
                     if not self.replay():
                         sys.exit(0)
+                
+                        
 
     
     def gameover(self):
@@ -183,7 +186,7 @@ class Wordle:
             Prints information to the terminal
         """
         if self.actual_word == self.guesses[-1]:
-            print(TERM.home + TERM.move_y(TERM.height // 2))
+            self.printboard()
             print(TERM.black_on_darkkhaki(TERM.center('You WIN!')))
             score = ("1st" if len(self.guesses) == 1 else
                      "2nd" if len(self.guesses) == 2 else
@@ -219,6 +222,9 @@ class Wordle:
             if response not in "yn":
                 print("Invalid. Type 'y' or 'n'.")
                 continue
+            if response == "y":
+                self.guesses = list()
+                self.play()
             return response == "y"
 
 def main():
