@@ -33,7 +33,7 @@ class Wordle:
             Inititalizes the guesses attribute 
             Initilizies the actual_word attribute
             Initializes the wordList attribute"""
-            
+        # Code Written By: Chigozie Maduka  
         self.name = name
         self.guesses = list()
         expr = r"\b^[a-z]{6}\b"
@@ -54,6 +54,7 @@ class Wordle:
         Side effects:
             Appends a user's guess to the self.guesses list
         """ 
+        # Code Written by Alex Blaine
         guess = input()
         if guess in self.wordList: 
             self.guesses.append(guess)
@@ -71,7 +72,8 @@ class Wordle:
         Side effects:
             Prints information to the terminal
             
-        """      
+        """   
+        # Code Written By: Maggie Huang   
         freq = {i : [self.actual_word.count(i), {pos for pos, char in enumerate(self.actual_word) if char == i}] for i in set(self.actual_word)}
         guess_freq = {i : [guess.count(i), {pos for pos, char in enumerate(guess) if char == i}] for i in set(guess)}
         for x in range(len(guess)):
@@ -122,6 +124,7 @@ class Wordle:
             Prints information to the terminal
             
         """
+        # Code Written By: Chigozie Maduka
         with TERM.fullscreen():
             self.actual_word = choice(self.wordList)
             self.printboard()
@@ -149,6 +152,7 @@ class Wordle:
             Bool: True if the game is over, false if it is not
         
         """  
+        # Code Written by Alex Blaine
         if self.actual_word != self.guesses[-1]:
             if len(self.guesses) >= 6:
                 return True
@@ -164,6 +168,7 @@ class Wordle:
             Prints information to the terminal
         
         """
+        # Code Written by Alex Blaine
         print(TERM.clear)
         print(self.actual_word)
         print(VIOLET(f"{self.name}"))
@@ -186,6 +191,7 @@ class Wordle:
             Adds a players score to score.txt
             Prints information to the terminal
         """
+        # Code Written By: Chigozie Maduka  
         if self.actual_word == self.guesses[-1]:
             self.printboard()
             print(TERM.black_on_darkkhaki(TERM.center('You WIN!')))
@@ -217,6 +223,7 @@ class Wordle:
         Side effects:
             prints information to the terminal
         """
+        # Code Written By: Maggie Huang
         print()
         # Referenced this from the Mancala homework
         while True:
@@ -230,6 +237,9 @@ class Wordle:
             return response == "y"
 
 def main():
+    """ Initializes a Wordle project and plays a game of wordle
+    
+    """
     # Wordlist grabbed from: https://gist.github.com/dstrelau/1005478
     player = Wordle("Chigozie","wordlist.txt")
     player.play()
