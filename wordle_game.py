@@ -174,6 +174,7 @@ class Wordle:
         print(TERM.white(TERM.center('L,M,N,O,P,Q,R,S,T,U,V')))
         print(TERM.white(TERM.center('W,X,Y,Z')))
         
+        
     
     def win_lose(self, filepath):
         """Determines what happens if the player wins or loses
