@@ -218,6 +218,7 @@ class Wordle:
             prints information to the terminal
         """
         print()
+        # Referenced this from the Mancala homework
         while True:
             response = (input("Play Again: (y/n)? "))
             if response not in "yn":
@@ -229,6 +230,7 @@ class Wordle:
             return response == "y"
 
 def main():
+    # Wordlist grabbed from: https://gist.github.com/dstrelau/1005478
     player = Wordle("Chigozie","wordlist.txt")
     player.play()
 
