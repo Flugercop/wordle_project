@@ -1,18 +1,1 @@
-Attempt 1: HOSTLY(3/6)
-Attempt 2: HOSTLY(4/6)
-Attempt 3: TITIEN(3/6)
-Attempt 4: GAMEOVER
-Attempt 5: COODLE(4/6)
-Attempt 6: PARKER(6/6)
-Attempt 7: DANNER(1/6)
-Attempt 8: TORNEY(5/6)
-Attempt 9: HERIOT(6/6)
-Attempt 10: TITTUP(5/6)
-Attempt 11: JETTON(5/6)
-Attempt 12: BALINE(6/6)
-Attempt 13: UNLEAF(5/6)
-Attempt 14: GAMEOVER
-Attempt 15: CUMBLY(4/6)
-Attempt 16: AWHEEL(5/6)
-Attempt 17: COODLE(6/6)
-Attempt 18: DURANT(4/6)
+
