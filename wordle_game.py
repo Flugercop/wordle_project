@@ -10,6 +10,8 @@ MISPLACED = TERM.yellow3 #Yellow to show the letter is correct but misplaced
 INCORRECT = TERM.grey65 #Grey to show the letter is not in the solution
 CORRECT = TERM.green2 #Green to show the letter is in the correct position
 VIOLET = TERM.violetred4 #Violet color for player name
+UNKNOWN = TERM.white
+NOT_THERE = TERM.red
 
 class Wordle:
     """A program that takes in a user inputs to try to guess a 6 letters word
@@ -33,10 +35,12 @@ class Wordle:
             Initilizies the name attribute
             Inititalizes the guesses attribute 
             Initilizies the actual_word attribute
-            Initializes the wordList attribute"""
+            Initializes the wordList attribute
+            Initializes the alphabet attribute"""
         # Code Written By: Chigozie Maduka  
         self.name = name
         self.guesses = list()
+        self.alphabet = dict()
         expr = r"\b^[a-z]{6}\b"
         with open(filepath, "r", encoding="utf-8") as f:
             self.wordList = [line.strip().upper() for line in f if re.search(expr, line)]
@@ -73,7 +77,7 @@ class Wordle:
         Side effects:
             Prints information to the terminal
             
-        """   
+        """  
         # Code Written By: Maggie Huang   
         freq = {i : [self.actual_word.count(i), {pos for pos, char in enumerate(self.actual_word) if char == i}] for i in set(self.actual_word)}
         guess_freq = {i : [guess.count(i), {pos for pos, char in enumerate(guess) if char == i}] for i in set(guess)}
@@ -82,11 +86,13 @@ class Wordle:
             # guessed character not found in targeted word
             if char not in freq.keys():
                 print (INCORRECT(guess[x]), end=" ")
+                self.alphabet[char] = NOT_THERE
             # if the guess correctly guess all index of the targeted word
             elif len(set(freq[char][1].intersection(guess_freq[char][1]))) == freq[char][0]:
                 # if this index is one of the correct index then print green
                 if x in freq[char][1]:
                     print (CORRECT(guess[x]), end=" ")
+                    self.alphabet[char] = CORRECT
                 # else not one of the correct index, print grey
                 else:
                     print (INCORRECT(guess[x]), end=" ")
@@ -94,14 +100,17 @@ class Wordle:
             elif freq[char][0] > guess_freq[char][0]:
                 if x in freq[char][1]:
                     print (CORRECT(guess[x]), end=" ")
+                    self.alphabet[char] = CORRECT
                 # else not one of the correct index, print grey
                 else:
                     print (MISPLACED(guess[x]), end=" ")
-                
+                    if char not in self.alphabet or self.alphabet[char] != CORRECT:
+                        self.alphabet[char] = MISPLACED
             # if there are more instances in guess than targeted word
             elif guess_freq[char][0] > freq[char][0]:
                 if x in freq[char][1]:
                     print (CORRECT(guess[x]), end=" ")
+                    self.alphabet[char] = CORRECT
                     freq[char][0] -= 1
                 # else not one of the correct index, print grey
                 elif freq[char][0] > 0:
@@ -112,8 +121,11 @@ class Wordle:
                     print (INCORRECT(guess[x]), end=" ")
             elif char == self.actual_word[x]:
                 print (CORRECT(guess[x]), end=" ")
+                self.alphabet[char] = CORRECT
             else:
-                print (MISPLACED(guess[x]), end=" ") 
+                print (MISPLACED(guess[x]), end=" ")
+                if char not in self.alphabet or self.alphabet[char] != CORRECT:
+                        self.alphabet[char] = MISPLACED 
         print()      
 
         
@@ -176,9 +188,10 @@ class Wordle:
         for guess in self.guesses:
             self.match(guess)
         print()
-        print(TERM.white(TERM.center('A,B,C,D,E,F,G,H,I,J,K')))
-        print(TERM.white(TERM.center('L,M,N,O,P,Q,R,S,T,U,V')))
-        print(TERM.white(TERM.center('W,X,Y,Z')))
+        for line in ['A,B,C,D,E,F,G,H,I,J,K','L,M,N,O,P,Q,R,S,T,U,V',
+                     'W,X,Y,Z']:
+            letter_list = [self.alphabet.get(char, lambda x: x)(char) for char in line]
+            print(TERM.center("".join(letter_list)))
         
         
     
@@ -234,6 +247,7 @@ class Wordle:
                 continue
             if response == "y":
                 self.guesses = list()
+                self.alphabet = dict()
                 self.play()
             return response == "y"
         
