@@ -181,7 +181,7 @@ class Wordle:
             Prints information to the terminal
         
         """
-        # Code Written by Alex Blaine
+        # Code Written by Chigozie Maduka
         print(TERM.clear)
         print(self.actual_word)
         print(VIOLET(f"{self.name}"))
@@ -237,7 +237,7 @@ class Wordle:
         Side effects:
             prints information to the terminal
         """
-        # Code Written By: Maggie Huang
+        # Code Written By: Chigozie Maduka
         print()
         # Referenced this from the Mancala homework
         while True:
