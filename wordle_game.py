@@ -2,6 +2,7 @@ from random import choice
 from blessed import Terminal
 import re
 import sys
+from argparse import ArgumentParser
 
 TERM = Terminal()
 
@@ -235,17 +236,33 @@ class Wordle:
                 self.guesses = list()
                 self.play()
             return response == "y"
+        
+def parse_args(arglist):
+    """Parse command-line arguments.
+    
+    Expect an optional argument (a string containing the player's name)
+    
+    Args:
+        arglist (list of str): list of command-line arguments.
+        
+    Returns:
+        namespace: a namespace with the attribute "name". The
+        value of (name) will be a string."
+    """
+    parser = ArgumentParser()
+    parser.add_argument("-n", "--name", type = str, default = "Player 1")
+    return parser.parse_args(arglist)
 
 def main():
     """ Initializes a Wordle project and plays a game of wordle
     
     """
     # Wordlist grabbed from: https://gist.github.com/dstrelau/1005478
-    player = Wordle("Chigozie","wordlist.txt")
+    player = Wordle(args.name,"wordlist.txt")
     player.play()
 
   
-
                        
-if __name__ == "__main__": 
+if __name__ == "__main__":
+    args = parse_args(sys.argv[1:]) 
     main()
