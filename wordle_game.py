@@ -61,7 +61,10 @@ class Wordle:
         """ 
         # Code Written by Alex Blaine
         guess = input()
-        if guess in self.wordList: 
+        #Added set operation (intersection) to see if guess is a valid word in the wordlist
+        intersection = set([guess]).intersection(set(self.wordList))
+        #If guess is valid the intersection will have more than 1 object
+        if len(intersection) > 0: 
             self.guesses.append(guess)
             return guess
         else:
@@ -196,6 +199,7 @@ class Wordle:
         """
         # Code Written by Chigozie Maduka
         print(TERM.clear)
+        #This is the line that is printing out the answer on our board
         print(self.actual_word)
         print(VIOLET(f"{self.name}"))
         for guess in self.guesses:
