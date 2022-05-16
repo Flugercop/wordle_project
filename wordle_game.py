@@ -166,13 +166,26 @@ class Wordle:
         
         """  
         # Code Written by Alex Blaine
-        if self.actual_word != self.guesses[-1]:
+        #New function using regex and fstrings
+        # supposed to match actual word to the last guess
+        l = re.search(f"{self.actual_word}", self.guesses[-1])
+        #l will be None if there is no match which means the guess is wrong
+        if l is None:
             if len(self.guesses) >= 6:
                 return True
             else: 
                 return False
         else: 
-            return True            
+            return True 
+        
+        
+        # if self.actual_word != self.guesses[-1]:
+        #     if len(self.guesses) >= 6:
+        #         return True
+        #     else: 
+        #         return False
+        # else: 
+        #     return True            
         
     def printboard(self):
         """ Displays the current contents of the board
