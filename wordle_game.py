@@ -24,6 +24,7 @@ class Wordle:
         wordList (list of str): List of words with 6 letters
     """
         
+    
     def __init__(self, name, filepath):
         """ This initilizes a new Wordle object
         
@@ -34,7 +35,6 @@ class Wordle:
         Side effects:
             Initilizies the name attribute
             Inititalizes the guesses attribute 
-            Initilizies the actual_word attribute
             Initializes the wordList attribute
             Initializes the alphabet attribute"""
         # Code Written By: Chigozie Maduka  
@@ -61,9 +61,7 @@ class Wordle:
         """ 
         # Code Written by Alex Blaine
         guess = input()
-        #Added set operation (intersection) to see if guess is a valid word in the wordlist
         intersection = set([guess]).intersection(set(self.wordList))
-        #If guess is valid the intersection will have more than 1 object
         if len(intersection) > 0: 
             self.guesses.append(guess)
             return guess
@@ -138,6 +136,7 @@ class Wordle:
         
         Side Effects:
             Prints information to the terminal
+            Initilizies the actual_word attribute
             
         """
         # Code Written By: Chigozie Maduka
@@ -159,8 +158,6 @@ class Wordle:
                         sys.exit(0)
                 
                         
-
-    
     def gameover(self):
         """ Determines whether or not the game is over
         
@@ -169,10 +166,7 @@ class Wordle:
         
         """  
         # Code Written by Alex Blaine
-        #New function using regex and fstrings
-        # supposed to match actual word to the last guess
         l = re.search(f"{self.actual_word}", self.guesses[-1])
-        #l will be None if there is no match which means the guess is wrong
         if l is None:
             if len(self.guesses) >= 6:
                 return True
@@ -180,15 +174,7 @@ class Wordle:
                 return False
         else: 
             return True 
-        
-        
-        # if self.actual_word != self.guesses[-1]:
-        #     if len(self.guesses) >= 6:
-        #         return True
-        #     else: 
-        #         return False
-        # else: 
-        #     return True            
+     
         
     def printboard(self):
         """ Displays the current contents of the board
@@ -245,6 +231,7 @@ class Wordle:
             print(TERM.black_on_darkkhaki(TERM.center("You Lose!")))
             print (TERM.black_on_white(TERM.center("The Correct Word Was: " + (TERM.red(self.actual_word)))))
             
+    
     def replay(self):
         """ Asks user if they want to play again
         
@@ -253,6 +240,8 @@ class Wordle:
             
         Side effects:
             prints information to the terminal
+            modifies self.guesses
+            modifies self.alphabet
         """
         # Code Written By: Chigozie Maduka
         print()
@@ -268,6 +257,7 @@ class Wordle:
                 self.play()
             return response == "y"
         
+
 def parse_args(arglist):
     """Parse command-line arguments.
     
@@ -283,6 +273,7 @@ def parse_args(arglist):
     parser = ArgumentParser()
     parser.add_argument("-n", "--name", type = str, default = "Player 1")
     return parser.parse_args(arglist)
+
 
 def main():
     """ Initializes a Wordle project and plays a game of wordle
