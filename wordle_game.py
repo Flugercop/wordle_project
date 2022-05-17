@@ -168,10 +168,8 @@ class Wordle:
         # Code Written by Alex Blaine
         l = re.search(f"{self.actual_word}", self.guesses[-1])
         if l is None:
-            if len(self.guesses) >= 6:
-                return True
-            else: 
-                return False
+            result = True if len(self.guesses) >= 6 else False
+            return result
         else: 
             return True 
      
