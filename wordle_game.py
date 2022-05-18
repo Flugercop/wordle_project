@@ -44,9 +44,16 @@ class Wordle:
         expr = r"\b^[a-z]{6}\b"
         with open(filepath, "r", encoding="utf-8") as f:
             self.wordList = [line.strip().upper() for line in f if re.search(expr, line)]
+      
+        # Code Written By: Maggie Huang 
+    def __str__(self):
+        """returns player's name and their last word"""
+        lastGuess = len(self.guesses) - 1
+        return f'{self.name}, your last guess was {self.guesses[lastGuess]}'
+    
+    
         
-    def __repr__(self):
-        raise NotImplementedError
+    
     
     def turn(self):
         """Simulates a players attempt at guessing the word the Wordle game
@@ -242,10 +249,14 @@ class Wordle:
             prints information to the terminal
             modifies self.guesses
             modifies self.alphabet
+            print out user's last word 
         """
         # Code Written By: Chigozie Maduka
         print()
-        # Referenced this from the Mancala homework
+        # The play function initializes the program and exit the system 
+        # so the str magic function can not be accessed inside the main function  
+        print(self.__str__()) 
+        # Referenced this from the Mancala homework     
         while True:
             response = (input("Play Again: (y/n)? "))
             if response not in "yn":
@@ -280,11 +291,16 @@ def main():
     
     """
     # Wordlist grabbed from: https://gist.github.com/dstrelau/1005478
-    player = Wordle(args.name,"wordlist.txt")
+    name = input("Player name: ")
+    player = Wordle(name,"wordlist.txt")
     player.play()
+
+    
 
   
                        
 if __name__ == "__main__":
-    args = parse_args(sys.argv[1:]) 
     main()
+    args = parse_args(sys.argv[1:]) 
+    
+    
