@@ -291,8 +291,7 @@ def main():
     
     """
     # Wordlist grabbed from: https://gist.github.com/dstrelau/1005478
-    name = input("Player name: ")
-    player = Wordle(name,"wordlist.txt")
+    player = Wordle(args.name,"wordlist.txt")
     player.play()
 
     
@@ -300,7 +299,7 @@ def main():
   
                        
 if __name__ == "__main__":
-    main()
     args = parse_args(sys.argv[1:]) 
+    main()
     
     
