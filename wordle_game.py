@@ -45,6 +45,8 @@ class Wordle:
         with open(filepath, "r", encoding="utf-8") as f:
             self.wordList = [line.strip().upper() for line in f if re.search(expr, line)]
         
+    def __repr__(self):
+        raise NotImplementedError
     
     def turn(self):
         """Simulates a players attempt at guessing the word the Wordle game
